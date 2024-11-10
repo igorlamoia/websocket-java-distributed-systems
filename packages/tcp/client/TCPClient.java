@@ -1,4 +1,4 @@
-package packages.tcp;
+package packages.tcp.client;
 
 import java.io.*;
 import java.net.*;
@@ -10,9 +10,9 @@ public class TCPClient {
         int port = 1234;
 
         try (Socket socket = new Socket(hostname, port);
-             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader console = new BufferedReader(new InputStreamReader(System.in))) {
+                BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
+                BufferedReader console = new BufferedReader(new InputStreamReader(System.in))) {
 
             System.out.println("Connected to the server");
 
@@ -22,7 +22,10 @@ public class TCPClient {
             String userInput;
             while (true) {
                 // Read user input from console
-                System.out.print("Enter message (type 'exit' to quit): ");
+                System.out.println("type 'exit' to quit");
+                System.out.println(
+                        "First param: (+, -, *, /), other params: numbers[] separated by space, example: + 1 2 3");
+                System.err.print("Enter message: ");
                 userInput = console.readLine();
 
                 if ("exit".equalsIgnoreCase(userInput)) {
@@ -43,4 +46,3 @@ public class TCPClient {
         }
     }
 }
-
