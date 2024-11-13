@@ -1,28 +1,84 @@
-# Running the project
+### Package Descriptions
 
-In the root's project folder
-`javac packages/**/**/*.java`
-`java -cp . <filepath>.java`
+- **packages/shared**: Contains shared classes used by both TCP and UDP implementations.
 
-java -cp . packages/tcp/server/MultiThreadedTCPServer
-java -cp . packages/tcp/client/TCPClient
+  - `Calculator.java`: Implements basic arithmetic operations.
+  - `CalculatorDTO.java`: Data Transfer Object for calculator operations.
+  - `GetCalculatorParams.java`: Parses input strings to create `CalculatorDTO` objects.
+  - `GetUserInput.java`: Utility class to get user input from the console.
 
-java -cp . packages/udp/server/UDPServer
-java -cp . packages/udp/client/UDPClient
+- **packages/tcp/client**: Contains the TCP client implementation.
 
-Atividade de Sistemas Distribuídos:
+  - `TCPClient.java`: Connects to the TCP server, sends user input, and receives responses.
 
-1 - Adaptar o servidor e cliente TCP para que desempenhem as seguintes funções:
-Servidor: - Implemente 4 tipos de serviço de aritimética básica (adição, subtração, divisão e multiplicação). - Receba uma mensagem do no formato [op,arg1,arg2,arg3,...,argN], onde op é um símbolo de +, -, / ou \_, e arg são números reais - Aplique a operação correspondente na lista de elementos e retorne o resultado ou uma mensagem caso a operação não seja possível.
-Exemplos:
-[+,1,2,3] => [6]
-[/,16,4,2] => [2]
-[*,-1,5,5] => [-25]
-[+,10] => [10]
-[-,5] => [-5]
-[/,5] => [erro: argumentos insuficientes]
-Cliente: - Faça um laço de repetição em que: - Apresenta um menu de operações - Lê a operação e os argumentos de uma única linha (ex: + 5 10 9 4) - Invoca o servidor e apresenta os resultados - Sai do laço caso o usuário digite "exit"
+- **packages/tcp/server**: Contains the TCP server implementation.
 
-2 - Implemente a mesma funcionalidade que o exercício anterior, porém usando o servidor e o cliente UDP.
+  - `ClientHandler.java`: Handles individual client connections in separate threads.
+  - `MultiThreadedTCPServer.java`: Listens for incoming connections and starts a new `ClientHandler` thread for each client.
 
-Faça o upload das classes Java através do SIGAA. Faça o upload apenas dos arquivos .java, os arquivos .class não são necessários. Se você utilizar algum IDE, modifique o código para que ele não possua nenhuma definição de package ou outros detalhes específicos do projeto criado, permitindo a fácil compilação e execução do mesmo via linha de comando.
+- **packages/udp/client**: Contains the UDP client implementation.
+
+  - `UDPClient.java`: Sends user input to the UDP server and receives responses.
+
+- **packages/udp/server**: Contains the UDP server implementation.
+  - `UDPServer.java`: Listens for incoming UDP packets, processes them, and sends responses.
+
+## TCP vs UDP
+
+### TCP (Transmission Control Protocol)
+
+- **Connection-oriented**: Establishes a connection before data is sent.
+- **Reliable**: Ensures that data is delivered in the same order it was sent.
+- **Error-checking**: Provides error-checking and guarantees delivery.
+- **Use Case**: Suitable for applications where data integrity and order are critical, such as file transfers, web pages, and emails.
+
+### UDP (User Datagram Protocol)
+
+- **Connectionless**: Sends data without establishing a connection.
+- **Unreliable**: Does not guarantee delivery, order, or error-checking.
+- **Faster**: Lower latency compared to TCP due to the lack of connection overhead.
+- **Use Case**: Suitable for applications where speed is more critical than reliability, such as video streaming, online gaming, and voice over IP (VoIP).
+
+## Running the Project
+
+To compile and run the project, follow these steps:
+
+1. **Compile the Java files**:
+
+   ```sh
+   javac packages/**/**/*.java
+   ```
+
+2. **Run the TCP Server**:
+
+   ```sh
+   java -cp . packages.tcp.server.MultiThreadedTCPServer
+   ```
+
+3. **Run the TCP Client**:
+
+   ```sh
+   java -cp . packages.tcp.client.TCPClient
+   ```
+
+4. **Run the UDP Server**:
+
+   ```sh
+   java -cp . packages.udp.server.UDPServer
+   ```
+
+5. **Run the UDP Client**:
+   ```sh
+   java -cp . packages.udp.client.UDPClient
+   ```
+
+## Assignment Instructions
+
+1. **TCP Server and Client**:
+
+   - Implement 4 types of basic arithmetic services (addition, subtraction, division, and multiplication).
+   - Receive a message in the format `[op,arg1,arg2,arg3,...,argN]`, where `op` is a symbol of `+`, `-`, `/`, or `*`, and `arg` are real numbers.
+   - Apply the corresponding operation to the list of elements and return the result or an error message if the operation is not possible.
+
+2. **UDP Server and Client**:
+   - Implement the same functionality as the TCP server and client using UDP.
