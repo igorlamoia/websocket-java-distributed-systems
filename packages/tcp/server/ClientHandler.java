@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import packages.shared.Calculator;
+import packages.shared.CalculatorDTO;
+import packages.shared.GetCalculatorParams;
 
 public class ClientHandler extends Thread {
   private Socket socket;
@@ -25,16 +27,10 @@ public class ClientHandler extends Thread {
       // Echo received messages back to the client
       while ((clientMessage = input.readLine()) != null) {
         // System.out.println("Received from client: " + clientMessage);
-        String[] params = clientMessage.split(" ");
-        String operator = params[0];
-
-        // Create a new float array for the remaining parameters
-        float[] numberParams = new float[params.length - 1];
-        for (int i = 1; i < params.length; i++)
-          numberParams[i - 1] = Float.parseFloat(params[i]);
-        Calculator calculator = new Calculator(operator);
-        float result = calculator.run(numberParams);
-        output.println("Server result from operation " + operator + ": " + result);
+        CalculatorDTO dto = GetCalculatorParams.execute(clientMessage);
+        Calculator calculator = new Calculator(dto.getOperator());
+        float result = calculator.run(dto.getNumberParams());
+        output.println("Calculator output from " + dto.getOperator() + ": " + result);
       }
 
     } catch (IOException e) {

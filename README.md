@@ -7,6 +7,9 @@ In the root's project folder
 java -cp . packages/tcp/server/MultiThreadedTCPServer
 java -cp . packages/tcp/client/TCPClient
 
+java -cp . packages/udp/server/UDPServer
+java -cp . packages/udp/client/UDPClient
+
 Atividade de Sistemas Distribuídos:
 
 1 - Adaptar o servidor e cliente TCP para que desempenhem as seguintes funções:

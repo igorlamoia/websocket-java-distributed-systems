@@ -1,20 +1,23 @@
-package packages.udp;
+package packages.udp.client;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+
+import packages.shared.GetUserInput;
 
 public class UDPClient {
 
     public static void main(String[] args) {
         String hostname = "localhost";
         int port = 9876;
-        
+
         try (DatagramSocket socket = new DatagramSocket()) {
             InetAddress serverAddress = InetAddress.getByName(hostname);
-
             // Message to send to the server
-            String message = "Hello, UDP Server!";
-            byte[] buffer = message.getBytes();
+
+            String userInput = GetUserInput.execute();
+            byte[] buffer = userInput.getBytes();
 
             // Send packet to server
             DatagramPacket requestPacket = new DatagramPacket(buffer, buffer.length, serverAddress, port);
@@ -35,4 +38,3 @@ public class UDPClient {
         }
     }
 }
-

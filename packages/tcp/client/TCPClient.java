@@ -3,6 +3,8 @@ package packages.tcp.client;
 import java.io.*;
 import java.net.*;
 
+import packages.shared.GetUserInput;
+
 public class TCPClient {
 
     public static void main(String[] args) {
@@ -11,11 +13,9 @@ public class TCPClient {
 
         try (Socket socket = new Socket(hostname, port);
                 BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
-                BufferedReader console = new BufferedReader(new InputStreamReader(System.in))) {
+                PrintWriter output = new PrintWriter(socket.getOutputStream(), true);) {
 
             System.out.println("Connected to the server");
-
             // Receive welcome message from server
             System.out.println("Server: " + input.readLine());
 
@@ -23,12 +23,8 @@ public class TCPClient {
             while (true) {
                 // Read user input from console
                 System.out.println("type 'exit' to quit");
-                System.out.println(
-                        "First param: (+, -, *, /), other params: numbers[] separated by space, example: + 1 2 3");
-                System.err.print("Enter message: ");
-                userInput = console.readLine();
-
-                if ("exit".equalsIgnoreCase(userInput)) {
+                userInput = GetUserInput.execute();
+                if (userInput.equalsIgnoreCase("exit")) {
                     System.out.println("Exiting...");
                     break;
                 }
